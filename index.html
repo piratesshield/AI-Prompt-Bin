@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Command Center Pro v3</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1 class="header-title">AI Command Center Pro v3</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="exportBtn">📥 Export</button>
+                    <button class="btn btn-danger" id="clearBtn">🗑️ Clear All</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalCount">0</div>
+                        <div class="stat-label">Total Captures</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔤</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="tokenCount">0</div>
+                        <div class="stat-label">Total Tokens</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💬</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="promptCount">0</div>
+                        <div class="stat-label">Prompts</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="responseCount">0</div>
+                        <div class="stat-label">Responses</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search and Filters -->
+        <section class="controls-section">
+            <div class="controls-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search captures...">
+                </div>
+                <div class="filters-row">
+                    <select id="toolFilter" class="filter-select">
+                        <option value="">All Tools</option>
+                        <option value="ChatGPT">ChatGPT</option>
+                        <option value="Gemini">Gemini</option>
+                        <option value="Perplexity">Perplexity</option>
+                        <option value="Claude">Claude</option>
+                        <option value="Copilot">Copilot</option>
+                    </select>
+                    <select id="typeFilter" class="filter-select">
+                        <option value="">All Types</option>
+                        <option value="Prompts">Prompts</option>
+                        <option value="Responses">Responses</option>
+                    </select>
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="Security">Security</option>
+                        <option value="Cloud">Cloud</option>
+                        <option value="Code">Code</option>
+                        <option value="AI/ML">AI/ML</option>
+                        <option value="Data">Data</option>
+                        <option value="General">General</option>
+                    </select>
+                    <button class="btn btn-primary" id="filterBtn">🔍 Apply Filters</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Table -->
+        <section class="table-section">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Tool</th>
+                            <th>Category</th>
+                            <th>Tokens</th>
+                            <th>Content</th>
+                            <th>Chat Link</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td colspan="7" class="no-data">No captures found. Data will appear here when available.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Pagination -->
+        <section class="pagination-section">
+            <div class="pagination-container" id="paginationContainer">
+                <button class="pagination-btn" id="prevPage" data-page="prev" disabled>« Previous</button>
+                <div class="pagination-numbers" id="paginationNumbers"></div>
+                <button class="pagination-btn" id="nextPage" data-page="next" disabled>Next »</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
