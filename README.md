@@ -15,9 +15,9 @@ At-a-glance statistics (Total Prompts, Tokens, Queries, Responses)
 Latest 5 captures preview
 
 Quick access buttons
-<img width="1314" height="626" alt="Screenshot 2025-12-01 015436" src="https://github.com/user-attachments/assets/ab59180e-81d3-4bd2-89da-55ca559a8492" />
+![aaaq](https://github.com/user-attachments/assets/d8286ce1-6b40-4c9f-9031-cfeb5b1e81ab)
 
-<img width="1213" height="591" alt="Screenshot 2025-12-01 015619" src="https://github.com/user-attachments/assets/a52b196a-d676-460d-ac29-f55b5f014164" />
+![qq](https://github.com/user-attachments/assets/2034bb92-4811-4fb7-820d-1b44712afffd)
 
 HOW TO INSTALL :
 
