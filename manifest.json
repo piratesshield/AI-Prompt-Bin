@@ -1,0 +1,59 @@
+
+{
+  "manifest_version": 3,
+  "name": "AI Prompt Bin",
+  "version": "6.2.0",
+  "description": "Capture AI prompts & responses. Visual Memory Graph and Analytics.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "clipboardWrite",
+    "clipboardRead",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://gemini.google.com/*",
+    "https://aistudio.google.com/*",
+    "https://claude.ai/*",
+    "https://www.perplexity.ai/*",
+    "https://copilot.microsoft.com/*",
+    "https://www.bing.com/*"
+  ],
+  "background": {
+    "service_worker": "extension/background.js"
+  },
+  "action": {
+    "default_title": "AI Prompt Bin",
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://gemini.google.com/*",
+        "https://aistudio.google.com/*",
+        "https://claude.ai/*",
+        "https://www.perplexity.ai/*",
+        "https://copilot.microsoft.com/*",
+        "https://www.bing.com/*"
+      ],
+      "js": ["extension/content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["extension/content.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

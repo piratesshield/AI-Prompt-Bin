@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AI Prompt Bin</title>
+  <style>
+    body { width: 320px; font-family: -apple-system, system-ui, sans-serif; background: #1a1a1a; color: #e0e0e0; margin: 0; padding: 16px; }
+    h1 { color: #c41e3a; font-size: 16px; margin: 0 0 12px 0; display: flex; justify-content: space-between; align-items: center; }
+    .btn-dash { font-size: 11px; text-decoration: none; color: #aaa; background: #333; padding: 4px 8px; border-radius: 4px; }
+    .btn-dash:hover { color: white; background: #444; }
+    
+    .stats { display: flex; gap: 8px; margin-bottom: 16px; }
+    .stat-box { flex: 1; background: #2a2a2a; padding: 8px; border-radius: 6px; text-align: center; }
+    .stat-val { font-size: 18px; font-weight: bold; color: white; }
+    .stat-lbl { font-size: 10px; color: #888; text-transform: uppercase; }
+
+    .list-title { font-size: 11px; font-weight: bold; color: #666; margin-bottom: 8px; text-transform: uppercase; }
+    .item { background: #252525; padding: 10px; border-radius: 6px; margin-bottom: 8px; border-left: 2px solid #c41e3a; }
+    .item-meta { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 10px; color: #888; }
+    .tag { background: rgba(196, 30, 58, 0.2); color: #ff4444; padding: 1px 4px; border-radius: 3px; font-weight: bold; }
+    .item-content { font-size: 12px; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    button.full-btn { width: 100%; background: #c41e3a; border: none; color: white; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 8px; }
+    button.full-btn:hover { background: #a01830; }
+  </style>
+</head>
+<body>
+  <h1>
+    AI Prompt Bin
+    <a href="#" id="open-dash" class="btn-dash">Dashboard ↗</a>
+  </h1>
+
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-val" id="count-total">0</div>
+      <div class="stat-lbl">Captures</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" id="count-tokens">0</div>
+      <div class="stat-lbl">Tokens</div>
+    </div>
+  </div>
+
+  <div class="list-title">Recent Activity</div>
+  <div id="recent-list">
+    <div style="text-align:center; color:#555; font-size:12px; padding:20px;">Loading...</div>
+  </div>
+
+  <button id="view-all" class="full-btn">View Full History</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>

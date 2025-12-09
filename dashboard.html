@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Prompt Bin Dashboard</title>
+    <style>
+        :root {
+            --bg: #1a1a1a;
+            --surface: #2a2a2a;
+            --accent: #c41e3a;
+            --text: #e0e0e0;
+            --muted: #a0a0a0;
+            --border: #333;
+        }
+        body { margin:0; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--text); }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        /* Header */
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 20px; }
+        h1 { color: var(--accent); margin: 0; font-size: 24px; letter-spacing: -0.5px; }
+        .actions button { background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: 8px 16px; cursor: pointer; border-radius: 4px; margin-left: 8px; font-size: 13px; }
+        .actions button:hover { background: #3a3a3a; }
+        .actions button.danger { color: #ff4444; border-color: #500; }
+        .actions button.primary { background: var(--accent); color: white; border-color: var(--accent); }
+        .actions button.primary:hover { background: #a01830; }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 30px; }
+        .stat-card { background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
+        .stat-val { font-size: 28px; font-weight: bold; margin-bottom: 4px; }
+        .stat-lbl { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Chart Section */
+        .chart-section { background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 30px; }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .time-controls button { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 4px 12px; cursor: pointer; border-radius: 4px; font-size: 12px; margin-left: 4px; }
+        .time-controls button.active { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        #chart-container { width: 100%; height: 300px; position: relative; display: flex; align-items: flex-end; justify-content: space-between; padding-top: 40px; box-sizing: border-box; }
+        .bar-group { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; flex: 1; height: 100%; position: relative; margin: 0 4px; }
+        .bar-stack { width: 80%; display: flex; flex-direction: column-reverse; transition: height 0.3s ease; border-radius: 4px 4px 0 0; overflow: hidden; opacity: 0.9; }
+        .bar-stack:hover { opacity: 1; }
+        .bar-segment { width: 100%; transition: height 0.3s; position: relative; }
+        .bar-label { font-size: 10px; color: var(--muted); margin-top: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .bar-tooltip { position: absolute; bottom: 100%; background: #000; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; margin-bottom: 8px; display: none; white-space: pre; z-index: 10; pointer-events: none; text-align: left; line-height: 1.4; border: 1px solid #444; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .bar-group:hover .bar-tooltip { display: block; }
+        .chart-legend { display: flex; gap: 15px; margin-top: 10px; justify-content: center; }
+        .legend-item { display: flex; align-items: center; font-size: 11px; color: var(--muted); }
+        .legend-dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+
+        /* Memory Graph */
+        .memory-section { background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 30px; }
+        #memory-graph-container { width: 100%; height: 400px; background: #222; border-radius: 4px; border: 1px solid #333; overflow: hidden; position: relative; }
+        svg { width: 100%; height: 100%; cursor: grab; }
+        svg:active { cursor: grabbing; }
+
+        /* Filters */
+        .filters { display: flex; gap: 12px; margin-bottom: 20px; }
+        input, select { background: var(--surface); border: 1px solid var(--border); color: white; padding: 10px; border-radius: 4px; font-size: 14px; }
+        input { flex: 2; }
+        select { flex: 1; }
+
+        /* Table */
+        .table-container { background: var(--surface); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { background: rgba(0,0,0,0.2); color: var(--muted); padding: 12px 16px; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+        td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(255,255,255,0.03); }
+        
+        .tag { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; display: inline-block; white-space: nowrap; }
+        .tag.chatgpt { background: rgba(16, 163, 127, 0.2); color: #10a37f; border: 1px solid rgba(16, 163, 127, 0.3); }
+        .tag.gemini { background: rgba(29, 78, 216, 0.2); color: #60a5fa; border: 1px solid rgba(29, 78, 216, 0.3); }
+        .tag.claude { background: rgba(217, 119, 6, 0.2); color: #fbbf24; border: 1px solid rgba(217, 119, 6, 0.3); }
+        .tag.perplexity { background: rgba(20, 184, 166, 0.2); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.3); }
+        .tag.copilot { background: rgba(124, 58, 237, 0.2); color: #a78bfa; border: 1px solid rgba(124, 58, 237, 0.3); }
+        .tag.default { background: rgba(255, 255, 255, 0.1); color: #ccc; }
+        .tag.prompt { background: transparent; color: #ff4444; border: 1px solid #500; font-size: 10px; }
+        .tag.response { background: transparent; color: #4ade80; border: 1px solid #050; font-size: 10px; }
+        .tag.category { background: #333; color: #aaa; border: 1px solid #444; font-size:10px; }
+
+        .content-cell { max-width: 450px; white-space: pre-wrap; line-height: 1.5; color: #ddd; }
+        .link-btn { color: var(--accent); text-decoration: none; font-size: 12px; border: 1px solid var(--border); padding: 4px 8px; border-radius: 4px; display: inline-block; }
+        .link-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+        .copy-btn { color: #aaa; background: transparent; border: 1px solid #444; font-size: 11px; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+        .copy-btn:hover { background: #333; color: white; }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Prompt Bin</h1>
+            <div class="actions">
+                <button id="refresh-btn">Refresh</button>
+                <button id="export-btn" class="primary">Export JSON</button>
+                <button id="clear-btn" class="danger">Clear History</button>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-val" id="stat-total">0</div>
+                <div class="stat-lbl">Total Captures</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="stat-tokens">0</div>
+                <div class="stat-lbl">Total Tokens</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="stat-prompts">0</div>
+                <div class="stat-lbl">Prompts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="stat-responses">0</div>
+                <div class="stat-lbl">Responses</div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-header">
+                <h3>Usage Activity by AI Tool</h3>
+                <div class="time-controls" id="time-controls">
+                    <button data-period="Day">Day</button>
+                    <button data-period="Week" class="active">Week</button>
+                    <button data-period="Month">Month</button>
+                    <button data-period="Year">Year</button>
+                    <button data-period="5Year">5 Year</button>
+                </div>
+            </div>
+            <div id="chart-container"></div>
+            <div class="chart-legend" id="chart-legend"></div>
+        </div>
+
+        <div class="memory-section">
+            <div class="chart-header">
+                <h3>Memory Graph</h3>
+                <div style="font-size:12px; color:#666;">Hover over nodes to filter the table below</div>
+            </div>
+            <div id="memory-graph-container">
+                <!-- SVG rendered here -->
+            </div>
+        </div>
+
+        <div class="filters">
+            <input type="text" id="search-input" placeholder="Search content...">
+            <select id="tool-filter">
+                <option value="ALL">All Tools</option>
+                <option value="ChatGPT">ChatGPT</option>
+                <option value="Gemini">Gemini</option>
+                <option value="Claude">Claude</option>
+                <option value="Perplexity">Perplexity</option>
+                <option value="Copilot">Copilot</option>
+            </select>
+            <select id="type-filter">
+                <option value="ALL">All Types</option>
+                <option value="prompt">Prompts</option>
+                <option value="response">Responses</option>
+            </select>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="80">Type</th>
+                        <th width="100">Tool</th>
+                        <th width="100">Category</th>
+                        <th>Content</th>
+                        <th width="80">Tokens</th>
+                        <th width="140">Date</th>
+                        <th width="60">Copy</th>
+                        <th width="70">Link</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Rows injected here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
