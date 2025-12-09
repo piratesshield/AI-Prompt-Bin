@@ -1,6 +1,6 @@
 
 # AI Prompt Bin
-<img width="600" height="600" alt="icon" src="https://github.com/user-attachments/assets/36bb68f9-a36e-4d45-be82-07c77a8b1309" />
+<img width="450" height="450" alt="icon" src="https://github.com/user-attachments/assets/36bb68f9-a36e-4d45-be82-07c77a8b1309" />
 
 **AI Prompt Bin** is a powerful Chrome Extension designed to capture, organize, and visualize your interactions with major AI tools like **ChatGPT, Gemini, Claude, Perplexity, and Copilot**.
 
