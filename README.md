@@ -94,7 +94,11 @@ Since this is a developer build, you must load it as an "Unpacked Extension" in 
 - All data resides in `chrome.storage.local`.
 - No tracking, no analytics, no cloud sync.
 - You can export your data to JSON at any time.
+---
 
+## 🔒 Inspired by
+ - Zscaler genAI DLP
+ - Supermemory.ai
 ---
 
 *Version 6.1.0*
