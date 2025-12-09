@@ -5,6 +5,8 @@
 
 It runs entirely in your browser (offline-first) and provides a standalone dashboard for analytics.
 
+NOTE : Prompts will display after 5-10 seconds in the dashboard. Because I have to capture the right aboslute URL once the response is loaded in the chat window.
+
 ---
 
 ## 🚀 Features
