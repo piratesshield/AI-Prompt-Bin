@@ -19,7 +19,7 @@ Automatically saves every prompt you send and every response you receive.
 - **Universal Support**: Works on ChatGPT, Gemini, Claude, Perplexity, and Microsoft Copilot.
 - **Privacy First**: All data is stored locally in your browser (`chrome.storage.local`).
 
-### 2. 🧠 Memory Graph
+### 2. 🧠 Memory Graph - Not working as expected
 A visual node-link diagram in the dashboard showing the relationship between:
 - **AI Tools** (Which ones you use most)
 - **Topics/Categories** (Code, Writing, General)
