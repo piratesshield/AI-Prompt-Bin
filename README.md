@@ -38,6 +38,10 @@ As you type in any AI chat box, a non-intrusive popup suggests previous prompts 
 - **Search**: Filter history by keyword.
 - **Filters**: Sort by AI Tool or Type (Prompt vs Response).
 - **Export**: Download your entire history as JSON.
+![1](https://github.com/user-attachments/assets/e3dc1c67-7bf6-4c35-ae77-4e2e275d38f5)
+![22](https://github.com/user-attachments/assets/5b62db31-9734-4695-9d34-b9a739385043)
+![4](https://github.com/user-attachments/assets/80492c62-76ef-4ecc-afbe-65db36b3d6ee)
+![3](https://github.com/user-attachments/assets/fa58031b-3454-4c27-b8df-822de6efa169)
 
 ---
 
